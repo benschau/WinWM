@@ -3,33 +3,6 @@
 #include "modWin.h"
 
 /*
- * Generate template configuration file for WinWM.
- * @return a boolean indicating success (true) or failure (false)
- */
-BOOL WINAPI generateConfig() {
-
-	std::string path;
-	HANDLE hFile;
-	BOOL bErrFlag;
-
-	path = DEFAULT_PATH;
-	hFile = CreateFile((LPCWSTR) path.c_str(), 
-						GENERIC_WRITE, 
-						0, 
-						NULL, 
-						CREATE_ALWAYS, 
-						FILE_ATTRIBUTE_NORMAL, 
-						NULL);
-	
-	bErrFlag = WriteFile(hFile, buff, dwBytesWritten, &bytesWritten, NULL);
-	if (bErrFlag == FALSE) {
-		std::cout << "ERR (" << GetLastError() << "): Couldn't write to file." << std::endl;
-	}
-
-	return true;
-}
-
-/*
  * Read configuration file for WinWM. 
  * Assuming that file has a specific notation, mapping a set of keys to some functionality 
  *  of the program. See the example conf for more details.

@@ -21,8 +21,6 @@ enum Action {
 	TEST_FUNC = 1
 };
 
-BOOL WINAPI generateConfig();
-
 BOOL WINAPI reloadConfig();
 
 BOOL WINAPI readConfig(std::string);
