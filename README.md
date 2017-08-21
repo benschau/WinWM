@@ -8,7 +8,7 @@ A window management system for the Windows OS for maximum efficiency. In its cur
 
 ### Installation
 
-Currently WIP; currently, you can build this solution locally on Windows using Visual Studio.
+Currently WIP; you can build this solution locally on Windows using Visual Studio.
 
 ### Usage
 
