@@ -94,10 +94,12 @@ LRESULT CALLBACK LLKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 						break;
 				} 
 				
+				/*
 				bErrFlag = WriteFile(hFile, buff, dwBytesWritten, &bytesWritten, NULL);
 				if (bErrFlag == FALSE) {
 					std::cout << "ERR (" << GetLastError() << "): Couldn't write to file." << std::endl;
-				}
+				} 
+				*/
 				
 				wprintf(L"Keyboard code: %#010x\n\n", p->vkCode);
 
