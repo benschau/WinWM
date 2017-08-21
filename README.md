@@ -1,6 +1,6 @@
 # WinWM
 
-A window management system for the Windows OS for maximum efficiency.
+A window management system for the Windows OS for maximum efficiency. In its current state, a half-baked keylogger.
 
 ### Requirements
 
