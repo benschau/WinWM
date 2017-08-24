@@ -16,7 +16,4 @@ BOOL WINAPI init();
 
 VOID WINAPI manageWindows();
 
-VOID WINAPI testFunction();
-VOID WINAPI testFunction2();
-
 #endif 
