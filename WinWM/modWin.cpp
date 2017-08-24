@@ -11,7 +11,9 @@ VOID WINAPI manageWindows() {
 
 }
 
+/*
 VOID WINAPI testFunction() {
 	std::cout << "Hello, test function 1!" << std::endl;
 }
+*/
 

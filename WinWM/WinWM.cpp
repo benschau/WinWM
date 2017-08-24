@@ -14,7 +14,7 @@
 
 LRESULT WINAPI LLKeyboardProc(int, WPARAM, LPARAM);
 VOID WINAPI cleanExit();
-VOID WINAPI err();
+std::string WINAPI decodeErr(DWORD);
 
 HANDLE hFile;
 BOOL bErrFlag = FALSE;
@@ -37,8 +37,9 @@ int main(int argc, char **argv)
 		std::cout << "ERR (" << GetLastError() << "): Couldn't create the file." << std::endl;
 	}
 
-	registerHotKeys();
-	
+	// Config object will automatically initialize, i.e read config file and register all hotkeys specified.
+	Config conf();
+
 	MSG msg = { 0 };
 	while (GetMessage(&msg, NULL, 0, 0)) {
 		PeekMessage(&msg, 0, 0, 0, PM_REMOVE);
@@ -80,10 +81,6 @@ LRESULT CALLBACK LLKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 				ret = ToAscii(p->vkCode, p->scanCode, keyboard_state, (LPWORD) buff, 0);
 				switch (ret) {
-					case 0:
-						//std::cout << "ERR ("  << GetLastError() << "): Couldn't find a translation for vk code: " << p->vkCode << std::endl;
-						// (ignore special keys, i.e ctrl, alt, shift, etc.)	
-						break;
 					case 1:
 						std::cout << "Key press: " << buff[0] << std::endl;
 						dwBytesWritten = 1;
@@ -94,7 +91,7 @@ LRESULT CALLBACK LLKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 						break;
 				} 
 				
-				/*
+				/* Keylogger portion; write each decipherable keystroke to a file.
 				bErrFlag = WriteFile(hFile, buff, dwBytesWritten, &bytesWritten, NULL);
 				if (bErrFlag == FALSE) {
 					std::cout << "ERR (" << GetLastError() << "): Couldn't write to file." << std::endl;
@@ -114,6 +111,8 @@ VOID WINAPI cleanExit() {
 	
 }
 
-VOID WINAPI err() {
+std::string WINAPI decodeErr(DWORD errMsgID) {
+	// TODO: Use FormatMessage() to decode errMsgID, where errMsgID is the error code from GetLastError()
 
+	return std::string();
 }
