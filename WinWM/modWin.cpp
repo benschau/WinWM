@@ -1,13 +1,19 @@
 #include "stdafx.h"
 #include "modWin.h"
 
-BOOL WINAPI init() {
-	
+BOOL WINAPI WM::init() {
+
+	while (true) {
+	}
 	
 	return true;
 }
 
-VOID WINAPI manageWindows() {
+VOID WINAPI WM::newWindow() {
+
+}
+
+VOID WINAPI WM::resizeWindow() {
 
 }
 

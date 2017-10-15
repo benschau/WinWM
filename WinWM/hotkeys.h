@@ -12,6 +12,11 @@
 
 const std::string DEFAULT_PATH = "winwm.conf";
 
+typedef struct HotKey {
+	std::vector<UINT> vkeyCombo;
+	UINT actionid;
+} HotKey; 
+
 class Config {
 	private:
 		HANDLE hConfig;
@@ -29,11 +34,6 @@ class Config {
 		BOOL WINAPI registerKeys();
 };
 
-
-typedef struct HotKey {
-	std::vector<UINT> vkeyCombo;
-	UINT actionid;
-} HotKey; 
 
 enum Action {
 	TEST_FUNC = 1

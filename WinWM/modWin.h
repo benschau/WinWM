@@ -10,10 +10,16 @@
 #include <string>
 #include <vector>
 
-//HWND hWnd;
+class WM {
+	private:
+		std::vector<HWND> windows;
 
-BOOL WINAPI init();
+	public:
+		BOOL WINAPI init();
 
-VOID WINAPI manageWindows();
+		VOID WINAPI newWindow();
+
+		VOID WINAPI resizeWindow();
+};
 
 #endif 

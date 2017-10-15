@@ -12,11 +12,29 @@ Config::Config(std::string path) {
 }
 
 BOOL WINAPI Config::reload() {
-
+	return TRUE;
 }
 
 BOOL WINAPI Config::init() {
+	this->hConfig = CreateFile((LPCWSTR) this->fpath.c_str(),
+						 GENERIC_READ,
+						 0,
+						 NULL,
+						 OPEN_EXISTING,
+						 FILE_ATTRIBUTE_NORMAL,
+						 NULL);
 
+	if (this->hConfig == INVALID_HANDLE_VALUE) {
+		std::cout << "ERR (" << GetLastError() << "): Couldn't open config." << std::endl;
+	}
+	
+	LPVOID buff = 0;
+	LPDWORD numBytes = 0;
+	while (!ReadFile(this->hConfig, buff, 1, numBytes, NULL)) {
+		std::cout << buff;
+	}
+
+	return true;
 }
 
 BOOL WINAPI Config::registerKeys() {
@@ -35,7 +53,7 @@ BOOL WINAPI Config::registerKeys() {
 VOID WINAPI execAction(WPARAM wParam) {
 	switch (wParam) {
 		case TEST_FUNC:
-			testFunction();
+			//testFunction();
 			break;
 		default:
 			break;

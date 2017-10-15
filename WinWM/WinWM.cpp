@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	}
 
 	// Config object will automatically initialize, i.e read config file and register all hotkeys specified.
-	Config conf();
+	Config conf("winwm_example.conf");
 
 	MSG msg = { 0 };
 	while (GetMessage(&msg, NULL, 0, 0)) {
