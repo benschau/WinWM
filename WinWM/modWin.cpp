@@ -9,17 +9,14 @@ BOOL WINAPI WM::init() {
 	return true;
 }
 
-VOID WINAPI WM::newWindow() {
+int newWindow() {
+	std::cout << "NEW WINDOW" << std::endl;
 
+	return 0;
 }
 
-VOID WINAPI WM::resizeWindow() {
-
+INT WM::resizeWindow() {
+	return 0;
 }
 
-/*
-VOID WINAPI testFunction() {
-	std::cout << "Hello, test function 1!" << std::endl;
-}
-*/
 

@@ -1,5 +1,5 @@
 // WinWM.cpp : 
-//
+//	Main entry point of the WinWM program.
 
 #include "stdafx.h"
 #include "hotkeys.h"

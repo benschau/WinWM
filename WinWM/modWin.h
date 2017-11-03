@@ -17,9 +17,10 @@ class WM {
 	public:
 		BOOL WINAPI init();
 
-		VOID WINAPI newWindow();
-
-		VOID WINAPI resizeWindow();
+		INT resizeWindow();
 };
+
+int newWindow();
+
 
 #endif 
