@@ -9,18 +9,25 @@
 #include <strsafe.h>
 #include <string>
 #include <vector>
+#include <map>
 
-class WM {
-	private:
-		std::vector<HWND> windows;
+namespace WinWM {
+	enum Action {
+		NEW_WINDOW = 1
+	};
 
-	public:
-		BOOL WINAPI init();
+	class WM {
+		private:
+			std::vector<HWND> windows;
 
-		INT resizeWindow();
-};
+		public:
+			BOOL WINAPI init();
+			static BOOL WINAPI newWindow();
 
-int newWindow();
+			INT resizeWindow();
+	};
 
+	VOID WINAPI execAction(WPARAM);
+}
 
 #endif 

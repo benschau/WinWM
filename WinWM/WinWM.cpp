@@ -38,15 +38,16 @@ int main(int argc, char **argv)
 	}
 
 	// Config object will automatically initialize, i.e read config file and register all hotkeys specified.
-	Config conf("winwm_example.conf");
+	WinWMConf::Config conf("C:\\.winwm_example.conf");
 
 	MSG msg = { 0 };
-	while (GetMessage(&msg, NULL, 0, 0)) {
+	while (GetMessage(&msg, NULL, 0, 0) != 0) {
 		PeekMessage(&msg, 0, 0, 0, PM_REMOVE);
 		
 		switch (msg.message) {
 			case WM_HOTKEY:
-				execAction(msg.wParam);
+				std::cout << "got hotkey!" << std::endl;
+				WinWMConf::execAction(msg.wParam);
 			default:
 				continue;
 		}

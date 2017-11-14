@@ -2,23 +2,26 @@
 #include "hotkeys.h"
 #include "modWin.h"
 
-Config::Config() {
+WinWMConf::Config::Config() {
 	this->init();
 }
 
-Config::Config(std::string path) {
+WinWMConf::Config::Config(std::string path) {
 	this->fpath = path;
-	this->init();
+	if (!this->init()) {
+		std::cout << "Couldn't initialize from configuration!" << std::endl;
+	}
 }
 
-BOOL WINAPI Config::reload() {
+BOOL WINAPI WinWMConf::Config::reload() {
 	if (init())
 		return TRUE;
 
 	return FALSE;
 }
 
-BOOL WINAPI Config::init() {
+BOOL WINAPI WinWMConf::Config::init() {
+	/*
 	this->hConfig = CreateFile((LPCWSTR) this->fpath.c_str(),
 						 GENERIC_READ,
 						 0,
@@ -30,30 +33,28 @@ BOOL WINAPI Config::init() {
 	if (this->hConfig == INVALID_HANDLE_VALUE) {
 		// TODO: Interpret GetLastError() as string.
 		std::cout << "ERR (" << GetLastError() << "): Couldn't open config." << std::endl;
-	} 
+	} */
 
-	std::ifstream hFile(fpath);
+	std::ifstream hFile(this->fpath);
 	std::queue<std::string> lines;
 	std::string line;
 	while (std::getline(hFile, line)) {
-		if (line[0] == '#') // hashes will be our comments
+		if (line == "" || line[0] == '#') // hashes will be our comments
 			continue;	
-
+		
+		std::cout << line << std::endl;
 		lines.push(line);
 	}
 
-	registerKeys(lines);
-
-	return true;
+	if (lines.empty()) {
+		return false;
+	} else {
+		registerKeys(lines);
+		return true;
+	}
 }
 
-BOOL WINAPI Config::registerKeys(std::queue<std::string> lines) {
-	/*
-	if (!RegisterHotKey(NULL, TEST_FUNC, MOD_ALT | MOD_NOREPEAT, 0x42)) {
-		std::cout << "ERR (" << GetLastError() << "): Couldn't register the given hotkey." << std::endl;
-		return false;
-	} */
-	
+BOOL WINAPI WinWMConf::Config::registerKeys(std::queue<std::string> lines) {
 	std::vector<std::string> hotkey_tokens, keystrokes;
 	
 	std::string defineSuper = lines.front();
@@ -66,7 +67,6 @@ BOOL WINAPI Config::registerKeys(std::queue<std::string> lines) {
 			keystrokes = split(hotkey_tokens[0], '+');
 	
 		for (std::string token : keystrokes) {
-			/*
 			if (token.compare("SUPER")) {
 				hk->fsMod |= MOD_WIN;
 			} else {
@@ -85,45 +85,34 @@ BOOL WINAPI Config::registerKeys(std::queue<std::string> lines) {
 
 					hk->vk |= vkScan;
 				} 
-			} */
-
-			std::cout << token << std::endl;
+			} 
 		}
 		
-		std::cout << std::endl;
+		//hk->action = newWindow; // Just a test for now.
+		hk->vk = VK_RETURN;
+		hk->action = 1; // should be a random number, then map to a function in WM.
 		
-		/*
-		hk->action = newWindow; // Just a test for now.
-
-		if (!RegisterHotKey(NULL, hk->action(), hk->fsMod, hk->vk)) {
+		if (!RegisterHotKey(NULL, hk->action, hk->fsMod | MOD_NOREPEAT, hk->vk)) {
 			std::cout << "ERR (" << GetLastError() << "): Couldn't register the given hotkey." << std::endl;
 			return false;
-		}
+		} else {
+			std::cout << "Hotkey registered." << std::endl;
+		} 
+
 
 		lines.pop();
-
-		delete hk; */
-
-		lines.pop();
+		delete hk; 
 	}
+		
+	/*
+	if (!RegisterHotKey(NULL, 1, MOD_CONTROL | MOD_NOREPEAT, 0x42)) {
+		std::cout << "ERR (" << GetLastError() << "): Couldn't register the given hotkey." << std::endl;
+	} */
 
 	return true;
 }
 
-/*
- * Execute the right action based on the given hotkey.
- */
-VOID WINAPI execAction(WPARAM wParam) {
-	switch (wParam) {
-		case NEW_WINDOW:
-			newWindow();
-			break;
-		default:
-			break;
-	}
-}
-
-std::vector<std::string> split(const std::string &s, char delim) {
+std::vector<std::string> WinWMConf::split(const std::string &s, char delim) {
 	std::istringstream buf(s);
 	std::istream_iterator<std::string> begin(buf), end;
 	std::vector<std::string> tokens(begin, end);
