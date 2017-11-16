@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="RBTree.h" />
     <ClInclude Include="hotkeys.h" />
     <ClInclude Include="modWin.h" />
     <ClInclude Include="stdafx.h" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="hotkeys.cpp" />
     <ClCompile Include="modWin.cpp" />
+    <ClCompile Include="RBTree.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
